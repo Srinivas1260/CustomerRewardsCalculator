@@ -25,14 +25,15 @@ const calculateRewardPtsTrans = (transData) => {
     return transData.map(transaction => {
         let points = 0;
         let over100 = transaction.amountSpend - 100;
-
+        let over50 = transaction.amountSpend - 50;
         if (over100 > 0) {
             // A customer receives 2 points for every dollar spent over $100 in each transaction      
             points += (over100 * 2);
         }
-        if (transaction.amt > 50) {
+        if (over50 > 0) {
+            over50 = over50 > 50 ? 50 : over50;
             // plus 1 point for every dollar spent over $50 in each transaction
-            points += 50;
+            points += (over50 * 1);
         }
         const month = new Date(transaction.date).getMonth();
         const year = new Date(transaction.date).getFullYear();
